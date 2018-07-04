@@ -1,0 +1,44 @@
+<template>
+    <div>
+        <div class='tabber'>
+          <router-link class='tabber-link' to='#'>
+            <span>
+              推荐
+            </span>
+          </router-link>
+          <router-link class='tabber-link' to='##'>
+            <span>
+              排行
+            </span>
+          </router-link>
+          <router-link class='tabber-link' to='###'>
+            <span>
+              歌手
+            </span>
+          </router-link>
+        </div>
+    </div>  
+</template>
+<style lang="scss" scoped>
+* {
+  padding: 0;
+  margin: 0;
+}
+.tabber {
+  height: 44px;
+  background-color: #d44439;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  .tabber-link {
+    text-decoration: none;
+    font-size: 14px;
+    color: aliceblue;
+  }
+  .router-link-active {
+    padding-bottom: 2px;
+    display: block;
+    border-bottom: 2px solid aliceblue;
+  }
+}
+</style>
