@@ -36,7 +36,9 @@
     color: aliceblue;
   }
   .router-link-active {
-    padding-bottom: 2px;
+    letter-spacing: 2px;
+    font-weight: 700;
+    padding-bottom: 3px;
     display: block;
     border-bottom: 2px solid aliceblue;
   }

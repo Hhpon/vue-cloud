@@ -9,6 +9,7 @@
 </template>
 <style lang="scss" scoped>
 .header {
+  letter-spacing: 4px;
   height: 44px;
   background-color: #d44439;
   display: flex;
