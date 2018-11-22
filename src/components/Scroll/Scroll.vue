@@ -3,7 +3,7 @@
       <transition-group tag='ul' :name="name" class="scroll-ul">
         <li v-for="(img,index) in imgs" v-show="index === mark" :key="index">
           <a :href='img.url'>
-            <img :src="img.picUrl">
+            <img :src="img.imageUrl">
           </a>
         </li>
       </transition-group>
@@ -21,15 +21,18 @@ export default {
       name: ""
     };
   },
+  created() {
+  },
+  mounted() {
+    this.getImgs();
+    this.name = "image";
+    // this.play();
+  },
   methods: {
     getImgs() {
-      return new Promise((resolve, reject) => {
-        axios.get("http://localhost:3000/banner").then(res => {
-          console.log(res.data.banners);
-          console.log("getImgs");
-          this.imgs = res.data.banners;
-          resolve("ok");
-        });
+      axios.get("http://localhost:3000/banner").then(res => {
+        this.imgs = res.data.banners;
+        console.log(res.data.banners);
       });
     },
     autoplay() {
@@ -43,13 +46,6 @@ export default {
       console.log("play");
       setInterval(this.autoplay, 3000);
     }
-  },
-  async created() {
-    await this.getImgs();
-    this.name = "image";
-  },
-  mounted() {
-    this.play();
   }
 };
 </script>
