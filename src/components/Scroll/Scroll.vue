@@ -1,14 +1,16 @@
 <template>
-    <div>
-      <transition-group tag='ul' :name="name" class="scroll-ul">
+  <div>
+    <div class="carousel-wrap">
+      <transition-group tag="ul" name="list" class="scroll-ul">
         <li v-for="(img,index) in imgs" v-show="index === mark" :key="index">
-          <a :href='img.url'>
+          <a :href="img.url">
             <img :src="img.imageUrl">
           </a>
         </li>
       </transition-group>
       <div>1324</div>
     </div>
+  </div>
 </template>
 <script>
 import axios from "axios";
@@ -21,12 +23,11 @@ export default {
       name: ""
     };
   },
-  created() {
-  },
+  created() {},
   mounted() {
     this.getImgs();
     this.name = "image";
-    // this.play();
+    this.play();
   },
   methods: {
     getImgs() {
@@ -48,35 +49,43 @@ export default {
     }
   }
 };
+// 由于无法获取到图片的高度，放弃这个方法
 </script>
-
 <style lang="scss" scoped>
-.scroll-ul {
-  width: 100%;
+.carousel-wrap {
   position: relative;
+  width: 100%;
+  height: 200px;
   overflow: hidden;
-  li {
+  background-color: black;
+  .scroll-ul {
     width: 100%;
-    float: left;
-    img {
-      display: block;
+    height: 100%;
+    li {
+      position: absolute;
       width: 100%;
+      height: 100%;
+      img {
+        height: 100%;
+        width: 100%;
+      }
     }
   }
-  .image-enter-to {
-    transition: all 1s ease;
-    transform: translateX(0);
-  }
-  .image-leave-active {
-    transition: all 1s ease;
-    transform: translateX(-100%);
-  }
-  .image-enter {
-    transform: translateX(100%);
-  }
-  .image-leave {
-    transform: translateX(0);
-  }
+}
+
+.list-enter-to {
+  transition: all 3s ease;
+  transform: translateX(0);
+}
+.list-leave-active {
+  transition: all 3s ease;
+  transform: translateX(-100%);
+}
+.list-enter {
+  transform: translateX(100%);
+}
+.list-leave {
+  transform: translateX(0);
 }
 </style>
 

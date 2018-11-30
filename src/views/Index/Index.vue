@@ -2,6 +2,7 @@
     <div>
         <Header></Header>
         <Tab></Tab>
+        <Scroll></Scroll>
     </div>
 </template>
 <script>
@@ -11,7 +12,8 @@ import axios from 'axios';
 export default {
   components: {
     Header,
-    Tab
+    Tab,
+    Scroll
   },
   data() {
     return {
