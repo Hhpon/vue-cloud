@@ -4,12 +4,12 @@
       <transition-group tag="ul" name="list" class="scroll-ul">
         <li v-for="(img,index) in imgs" v-show="index === mark" :key="index">
           <a :href="img.url">
-            <img :src="img.imageUrl">
+            <img :src="img.imageUrl" @load="loadHandle" :height="imgHeight+'px'" ref="img">
           </a>
         </li>
       </transition-group>
-      <div>1324</div>
     </div>
+    <button @click="getHeight">1241241243</button>
   </div>
 </template>
 <script>
@@ -20,7 +20,8 @@ export default {
     return {
       mark: 0,
       imgs: [],
-      name: ""
+      name: "",
+      imgHeight: 0
     };
   },
   created() {},
@@ -44,8 +45,14 @@ export default {
       }
     },
     play() {
-      console.log("play");
       setInterval(this.autoplay, 3000);
+    },
+    getHeight() {
+      console.log(this.$refs.img[0].naturalHeight);
+      this.imgHeight = this.$refs.img[0].naturalHeight;
+    },
+    loadHandle(){
+      console.log('加载完毕');
     }
   }
 };
@@ -55,18 +62,14 @@ export default {
 .carousel-wrap {
   position: relative;
   width: 100%;
-  height: 200px;
   overflow: hidden;
   background-color: black;
   .scroll-ul {
     width: 100%;
-    height: 100%;
     li {
       position: absolute;
       width: 100%;
-      height: 100%;
       img {
-        height: 100%;
         width: 100%;
       }
     }
