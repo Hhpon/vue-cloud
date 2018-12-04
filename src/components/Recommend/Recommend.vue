@@ -1,18 +1,25 @@
 <template>
-    <div>
-        <div class='recommend-list-header'>推荐歌单</div>
-        <ul class='songlist-ul'>
-          <li v-for="(songlist,index) in songLists" :key="index">
-              <div class = 'list-li-div'>
-                <img :src="songlist.picUrl" alt="">
-              </div>
-          </li>
-        </ul>
+  <div>
+    <div class="scroll-container">
+      <div class="scroll-item"></div>
+      <Scroll class="scroll-self"></Scroll>
     </div>
+    <div class="recommend-list-header">推荐歌单</div>
+    <ul class="songlist-ul">
+      <li v-for="(songlist,index) in songLists" :key="index" class="songList-item">
+        <img :src="songlist.picUrl">
+        <div>{{songlist.name}}</div>
+      </li>
+    </ul>
+  </div>
 </template>
 <script>
+import Scroll from "../Scroll/Scroll.vue";
 import axios from "axios";
 export default {
+  components: {
+    Scroll
+  },
   data() {
     return {
       songLists: []
@@ -34,6 +41,17 @@ export default {
 
 
 <style lang="scss" scoped>
+.scroll-container {
+  position: relative;
+  .scroll-item {
+    position: absolute;
+    background-color: #D44439;
+  }
+  .scroll-self {
+    width: 96%;
+    margin: 0 auto;
+  }
+}
 .recommend-list-header {
   height: 65px;
   font-size: 14px;
@@ -48,7 +66,7 @@ export default {
   flex-wrap: wrap;
   justify-content: space-around;
   li {
-    width: 33%;
+    width: 31%;
     img {
       width: 100%;
     }

@@ -1,23 +1,18 @@
 <template>
-    <div>
-        <div class='tabber'>
-          <router-link class='tabber-link' to='#'>
-            <span>
-              推荐
-            </span>
-          </router-link>
-          <router-link class='tabber-link' to='##'>
-            <span>
-              排行
-            </span>
-          </router-link>
-          <router-link class='tabber-link' to='###'>
-            <span>
-              歌手
-            </span>
-          </router-link>
-        </div>
-    </div>  
+  <div>
+    <div class="tabber">
+      <router-link class="tabber-link" to="/recommend">
+        <span>推荐</span>
+      </router-link>
+      <router-link class="tabber-link" to="##">
+        <span>排行</span>
+      </router-link>
+      <router-link class="tabber-link" to="###">
+        <span>歌手</span>
+      </router-link>
+    </div>
+    <router-view></router-view>
+  </div>
 </template>
 <style lang="scss" scoped>
 * {

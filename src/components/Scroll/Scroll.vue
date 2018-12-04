@@ -1,13 +1,31 @@
 <template>
   <div>
-    <div class="carousel-wrap">
-      <transition-group tag="ul" name="list" class="scroll-ul" :style="{height: imgHeight+'px'}">
-        <li v-for="(img,index) in imgs" v-show="index === mark" :key="index">
-          <a :href="img.url">
-            <img :src="img.imageUrl" ref="img">
-          </a>
+    <div class="carousel-wrap" ref="carousel">
+      <transition-group
+        tag="ul"
+        name="list"
+        class="scroll-ul"
+        v-if="imgs.length"
+        :style="{height: imgHeight+'px'}"
+      >
+        <li
+          v-for="(img,index) in imgs"
+          v-show="index === mark"
+          :key="index"
+          @mouseenter="stop"
+          @mouseleave="go"
+        >
+          <img :src="img.imageUrl" ref="img">
         </li>
       </transition-group>
+      <div class="carousel-items">
+        <span
+          v-for="(item,index) in imgs.length"
+          :class="{'active':index===mark}"
+          :key="index"
+          @mouseover="change(index)"
+        ></span>
+      </div>
     </div>
   </div>
 </template>
@@ -19,41 +37,23 @@ export default {
       mark: 1,
       imgs: [],
       imgHeight: 0,
-      timer: ""
+      timer: null
     };
   },
-  beforeCreate() {
-    // this.getImgs();
-    axios.get("http://localhost:3000/banner").then(res => {
-        this.imgs = res.data.banners;
-        let realWidth =
-          window.innerWidth ||
-          document.documentElement.clientWidth ||
-          document.body.clientWidth;
-        let img = new Image();
-        img.src = res.data.banners[0].imageUrl;
-        let that = this;
-        img.onload = function() {
-          that.imgHeight = (img.naturalHeight * realWidth) / img.naturalWidth;
-        };
-      });
-  },
   created() {
-    // this.getImgs();
+    this.getImgs();
   },
   mounted() {
     this.$nextTick(() => {
       this.timer = setInterval(this.autoplay, 3000);
     });
+    console.log(this.$refs.carousel.clientWidth);
   },
   methods: {
     getImgs() {
       axios.get("http://localhost:3000/banner").then(res => {
         this.imgs = res.data.banners;
-        let realWidth =
-          window.innerWidth ||
-          document.documentElement.clientWidth ||
-          document.body.clientWidth;
+        let realWidth = this.$refs.carousel.offsetWidth;
         let img = new Image();
         img.src = res.data.banners[0].imageUrl;
         let that = this;
@@ -68,8 +68,17 @@ export default {
         this.mark = 0;
       }
     },
-    play() {
-      setInterval(this.autoplay, 3000);
+    go() {
+      console.log("移出去");
+      this.timer = setInterval(this.autoplay, 3000);
+    },
+    stop() {
+      console.log("移进来");
+      clearInterval(this.timer);
+      this.timer = null;
+    },
+    change(index){
+      this.mark = index;
     }
   }
 };
@@ -80,7 +89,7 @@ export default {
   position: relative;
   width: 100%;
   overflow: hidden;
-  background-color: black;
+  border-radius: 5px;
   .scroll-ul {
     width: 100%;
     li {
@@ -89,6 +98,25 @@ export default {
       img {
         width: 100%;
       }
+    }
+  }
+  .carousel-items {
+    position: absolute;
+    z-index: 10;
+    width: 100%;
+    bottom: 5%;
+    text-align: center;
+    span {
+      display: inline-block;
+      height: 9px;
+      width: 9px;
+      margin: 0 2px;
+      border-radius: 50%;
+      background-color: #f0f1f2;
+      cursor: pointer;
+    }
+    .active {
+      background-color: #f76a69;
     }
   }
 }

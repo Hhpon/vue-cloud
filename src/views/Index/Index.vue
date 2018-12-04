@@ -16,7 +16,8 @@ export default {
   data() {
     return {
       songLists: [],
-      imgs: []
+      imgs: [],
+      imgHeight: 0
     };
   },
   methods: {
@@ -29,7 +30,17 @@ export default {
     getImgs() {
       axios.get("http://localhost:3000/banner").then(res => {
         this.imgs = res.data.banners;
-        console.log(res.data.banners);
+        let realWidth =
+          window.innerWidth ||
+          document.documentElement.clientWidth ||
+          document.body.clientWidth;
+        let img = new Image();
+        img.src = res.data.banners[0].imageUrl;
+        let that = this;
+        img.onload = function() {
+          that.imgHeight =
+            (img.naturalHeight * realWidth * 0.95) / img.naturalWidth;
+        };
       });
     }
   },
@@ -39,5 +50,9 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+</style>
+
 
 
