@@ -8,7 +8,15 @@
     <ul class="songlist-ul">
       <li v-for="(songlist,index) in songLists" :key="index" class="songList-item">
         <img :src="songlist.picUrl">
-        <div>{{songlist.name}}</div>
+        <div class="song-info">{{songlist.name}}</div>
+        <div>{{playCountNum(songlist)}}</div>
+      </li>
+    </ul>
+    <div class="recommend-list-header">推荐歌曲</div>
+    <ul class="songlist-ul">
+      <li v-for="(songlist,index) in songLists" :key="index" class="songList-item">
+        <img :src="songlist.picUrl">
+        <div class="song-info">{{songlist.name}}</div>
       </li>
     </ul>
   </div>
@@ -31,6 +39,19 @@ export default {
         this.songLists = res.data.result;
         console.log(this.songLists);
       });
+    },
+    playCountNum(songlist){
+      let playCount = Math.ceil(songlist.playCount);
+      console.log(playCount.length);
+      if(playCount.length > 9){
+        let a = playCount.slice(-10,-9);
+        console.log(a);
+        return;
+      }else if(playCount.length > 5){
+        let b = playCount.slice(0,-5);
+        console.log(b);
+        return; 
+      }
     }
   },
   mounted() {
@@ -44,8 +65,10 @@ export default {
 .scroll-container {
   position: relative;
   .scroll-item {
+    width: 100%;
+    height: 90px;
     position: absolute;
-    background-color: #D44439;
+    background-color: #d44439;
   }
   .scroll-self {
     width: 96%;
@@ -69,6 +92,11 @@ export default {
     width: 31%;
     img {
       width: 100%;
+      border-radius: 5px;
+    }
+    .song-info {
+      font-size: 13px;
+      padding: 5px 0px 10px;
     }
   }
 }
