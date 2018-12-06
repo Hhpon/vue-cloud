@@ -9,14 +9,18 @@
       <li v-for="(songlist,index) in songLists" :key="index" class="songList-item">
         <img :src="songlist.picUrl">
         <div class="song-info">{{songlist.name}}</div>
-        <div>{{playCountNum(songlist)}}</div>
+        <div class="playCount-container">
+          <i class="iconfont icon-cloud-headset" style="font-size: 12px;"></i>
+          {{playCountNum(songlist)}}
+        </div>
       </li>
     </ul>
     <div class="recommend-list-header">推荐歌曲</div>
     <ul class="songlist-ul">
-      <li v-for="(songlist,index) in songLists" :key="index" class="songList-item">
-        <img :src="songlist.picUrl">
-        <div class="song-info">{{songlist.name}}</div>
+      <li v-for="(songlist,index) in newSongs" :key="index" class="songList-item">
+        <img :src="songlist.song.album.blurPicUrl">
+        <div class="newsong-info">{{songlist.name}}</div>
+        <div class="song-author">{{songlist.song.artists[0].name}}</div>
       </li>
     </ul>
   </div>
@@ -30,32 +34,38 @@ export default {
   },
   data() {
     return {
-      songLists: []
+      songLists: [],
+      newSongs: [] 
     };
+  },
+  mounted() {
+    this.getSonglist();
+    this.getNewSong();
   },
   methods: {
     getSonglist() {
       axios.get("http://localhost:3000/personalized").then(res => {
         this.songLists = res.data.result;
-        console.log(this.songLists);
       });
     },
-    playCountNum(songlist){
-      let playCount = Math.ceil(songlist.playCount);
-      console.log(playCount.length);
-      if(playCount.length > 9){
-        let a = playCount.slice(-10,-9);
-        console.log(a);
-        return;
-      }else if(playCount.length > 5){
-        let b = playCount.slice(0,-5);
-        console.log(b);
-        return; 
+    getNewSong() {
+      axios.get("http://localhost:3000/personalized/newsong").then(res => {
+        for(let i = 0; i < 9; i++){
+          this.newSongs.push(res.data.result[i]);
+        }
+      });
+    },
+    playCountNum(songlist) {
+      let playCount = Math.ceil(songlist.playCount).toString();
+      if (playCount.length > 9) {
+        let a = playCount.slice(-10, -9);
+        return a + "亿";
+      } else if (playCount.length > 5) {
+        let b = playCount.slice(0, -4);
+        return b + "万";
       }
+      return playCount;
     }
-  },
-  mounted() {
-    this.getSonglist();
   }
 };
 </script>
@@ -90,6 +100,7 @@ export default {
   justify-content: space-around;
   li {
     width: 31%;
+    position: relative;
     img {
       width: 100%;
       border-radius: 5px;
@@ -97,6 +108,21 @@ export default {
     .song-info {
       font-size: 13px;
       padding: 5px 0px 10px;
+    }
+    .newsong-info{
+      font-size: 13px;
+      padding: 5px 0px;
+    }
+    .song-author{
+      font-size: 12px;
+      padding-bottom: 10px;
+    }
+    .playCount-container {
+      font-size: 12px;
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      color: #fff;
     }
   }
 }

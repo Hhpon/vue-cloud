@@ -4,7 +4,7 @@
       <router-link class="tabber-link" to="/recommend">
         <span>推荐</span>
       </router-link>
-      <router-link class="tabber-link" to="##">
+      <router-link class="tabber-link" to="/rank">
         <span>排行</span>
       </router-link>
       <router-link class="tabber-link" to="###">
