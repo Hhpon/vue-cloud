@@ -4,6 +4,7 @@ import Index from '@/views/Index/Index.vue'
 import Scroll from '@/components/Scroll/Scroll.vue'
 import Recommend from '@/components/Recommend/Recommend.vue'
 import Ranking from '@/components/Ranking/Ranking.vue'
+import Singer from '@/components/Singer/Singer.vue'
 
 Vue.use(Router)
 
@@ -24,6 +25,11 @@ export default new Router({
           path: 'rank',
           name: 'Ranking',
           component: Ranking
+        },
+        {
+          path: 'singer',
+          name: 'Singer',
+          component: Singer
         }
       ]
     },
