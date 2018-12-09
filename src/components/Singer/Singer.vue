@@ -3,7 +3,7 @@
 </template>
 <script>
 import axios from "axios";
-import do_sort from "../../assets/js/sort.js";
+import pinyin from 'pinyin';
 export default {
   data() {
     return {
@@ -23,7 +23,7 @@ export default {
           artists.forEach(element => {
             artists_arr.push(element.name);
           });
-          artists_arr.sort(do_sort);
+          artists_arr.sort(pinyin.compare);
           console.log(artists_arr);
         });
     }
