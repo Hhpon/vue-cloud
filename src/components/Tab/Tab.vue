@@ -7,7 +7,7 @@
       <router-link class="tabber-link" to="/rank">
         <span>排行</span>
       </router-link>
-      <router-link class="tabber-link" to="###">
+      <router-link class="tabber-link" to="/singer">
         <span>歌手</span>
       </router-link>
     </div>
