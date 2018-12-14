@@ -5,11 +5,11 @@ export default {
         singerList: ['1']
     },
     mutations: {
-        getSinger(state,artists_arr){
-            console.log(state);
+        getSingerM(state,artists_arr){
+            console.log(artists_arr);
         }
     },
-    action:{
+    actions:{
         getSinger({commit}){
             axios
             .get("http://localhost:3000/top/artists?offset=0&limit=100")
@@ -20,8 +20,7 @@ export default {
                 artists_arr.push(element.name);
               });
               artists_arr.sort(pinyin.compare);
-              console.log(artists_arr);
-              commit('getSinger',artists_arr)
+              commit('getSingerM',artists_arr)
             });
         }
     }

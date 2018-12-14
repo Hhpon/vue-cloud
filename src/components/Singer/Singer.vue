@@ -15,9 +15,8 @@ export default {
   },
   mounted() {
     console.log(this.singerList);
-    console.log(this.$store);
-    // this.$store.dispatch('getSinger');
-    // console.log(this.singerList);
+    this.$store.dispatch("getSinger");
+    console.log(this.singerList);
   },
   methods: {}
 };
