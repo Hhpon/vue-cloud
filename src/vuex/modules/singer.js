@@ -2,7 +2,7 @@ import axios from 'axios';
 import pinyin from "pinyin";
 export default {
     state: {
-        singerList: ['1']
+        singerList: []
     },
     mutations: {
         getSingerM(state,artists_arr){
@@ -15,6 +15,7 @@ export default {
             .get("http://localhost:3000/top/artists?offset=0&limit=100")
             .then(res => {
               let artists = res.data.artists;
+              console.log(artists);
               let artists_arr = [];
               artists.forEach(element => {
                 artists_arr.push(element.name);
